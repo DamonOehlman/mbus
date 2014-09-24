@@ -9,7 +9,13 @@ var reDelim = /[\.\:]/;
 
   ## Example Usage
 
+  Displayed below is a simple example:
+
   <<< examples/simple.js
+
+  Another simple example demonstrates, how a message bus can be provided a
+  parent message bus to relay messages to once after any local handlers have
+  been invoked.
 
 **/
 

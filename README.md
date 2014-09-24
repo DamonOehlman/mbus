@@ -10,8 +10,10 @@ No wildcard support at this stage though...
 
 ## Example Usage
 
+Displayed below is a simple example:
+
 ```js
-var bus = require('mbus')('test');
+var bus = require('mbus')();
 
 bus.on('foo.bar', function() {
   console.log('foo.bar triggered');
@@ -20,6 +22,10 @@ bus.on('foo.bar', function() {
 bus('foo.bar');
 
 ```
+
+Another simple example demonstrates, how a message bus can be provided a
+parent message bus to relay messages to once after any local handlers have
+been invoked.
 
 ## License(s)
 

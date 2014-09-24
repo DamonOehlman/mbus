@@ -1,4 +1,4 @@
-var bus = require('..')('test');
+var bus = require('..')();
 
 bus.on('foo.bar', function() {
   console.log('foo.bar triggered');
