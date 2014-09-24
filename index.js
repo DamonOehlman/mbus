@@ -15,7 +15,9 @@ var reDelim = /[\.\:]/;
 
   Another simple example demonstrates, how a message bus can be provided a
   parent message bus to relay messages to once after any local handlers have
-  been invoked.
+  been invoked:
+
+  <<< examples/parent.js
 
 **/
 

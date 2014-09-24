@@ -25,7 +25,23 @@ bus('foo.bar');
 
 Another simple example demonstrates, how a message bus can be provided a
 parent message bus to relay messages to once after any local handlers have
-been invoked.
+been invoked:
+
+```js
+var bus = require('mbus')();
+var foo = require('mbus')('foo', bus);
+
+bus.on('foo.bar', function() {
+  console.log('foo.bar triggered');
+});
+
+foo.on('bar', function() {
+  console.log('foo triggered bar');
+});
+
+foo('bar');
+
+```
 
 ## License(s)
 
