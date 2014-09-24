@@ -1,0 +1,31 @@
+{
+  "name": "mbus",
+  "version": "1.0.0",
+  "description": "If Node's EventEmitter and Eve were to have a child, it might look something like this",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/DamonOehlman/mbus.git"
+  },
+  "keywords": [
+    "eventemitter",
+    "emitter",
+    "eve",
+    "messagebus"
+  ],
+  "author": "Damon Oehlman <damon.oehlman@gmail.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/DamonOehlman/mbus/issues"
+  },
+  "homepage": "https://github.com/DamonOehlman/mbus",
+  "dependencies": {
+    "array-trie": "^1.0.0"
+  },
+  "devDependencies": {
+    "tape": "^3.0.0"
+  }
+}
