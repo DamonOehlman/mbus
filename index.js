@@ -1,18 +1,30 @@
 var createTrie = require('array-trie');
 var reDelim = /[\.\:]/;
 
+/**
+  # mbus
+
+  If Node's EventEmitter and Eve were to have a child, it might look something like this.
+  No wildcard support at this stage though...
+
+  ## Example Usage
+
+  <<< examples/simple.js
+
+**/
+
 var createBus = module.exports = function(namespace, parent, scope) {
   var registry = createTrie();
 
   function bus(name) {
     var args = [].slice.call(arguments, 1);
     var parts = getNameParts(name);
-    var handlers = registry.get(parts);
+    var handlers = registry.get(parts) || [];
 
     // run the registered handlers
-    var results = (handlers && handlers.map(function(handler) {
+    var results = handlers.map(function(handler) {
       return handler.apply(scope || this, args);
-    })) || [];
+    });
 
     // run the parent handlers
     if (bus.parent) {
