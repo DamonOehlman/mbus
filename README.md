@@ -6,7 +6,7 @@ No wildcard support at this stage though...
 
 [![NPM](https://nodei.co/npm/mbus.png)](https://nodei.co/npm/mbus/)
 
-
+[![Build Status](https://img.shields.io/travis/DamonOehlman/mbus.svg?branch=master)](https://travis-ci.org/DamonOehlman/mbus) 
 
 ## Example Usage
 
