@@ -1,27 +1,30 @@
 var createTrie = require('array-trie');
 var reDelim = /[\.\:]/;
 
-var createBus = module.exports = function(namespace, parent) {
+var createBus = module.exports = function(namespace, parent, scope) {
   var registry = createTrie();
 
   function bus(name) {
     var args = [].slice.call(arguments, 1);
-    var parts = Array.isArray(name) ? name : name.split(reDelim);
+    var parts = getNameParts(name);
     var handlers = registry.get(parts);
 
     // run the parent handlers
     if (bus.parent) {
-      bus.parent.apply(null, [ namespace.concat(parts) ].concat(args));
+      bus.parent.apply(scope || this, [ namespace.concat(parts) ].concat(args));
     }
 
     return handlers && handlers.map(function(handler) {
-      return handler.apply(null, args);
+      return handler.apply(scope || this, args);
     });
   }
 
+  function getNameParts(name) {
+    return Array.isArray(name) ? name : name.split(reDelim);
+  }
+
   function off(name, handler) {
-    var parts = name.split(reDelim);
-    var handlers = registry.get(parts);
+    var handlers = registry.get(getNameParts(name));
 
     if (handlers) {
       handlers.splice(handlers.indexOf(handler), 1);
@@ -29,7 +32,7 @@ var createBus = module.exports = function(namespace, parent) {
   }
 
   function on(name, handler) {
-    var parts = name.split(reDelim);
+    var parts = getNameParts(name);
     var handlers = registry.get(parts);
 
     if (handlers) {
