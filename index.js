@@ -9,14 +9,19 @@ var createBus = module.exports = function(namespace, parent, scope) {
     var parts = getNameParts(name);
     var handlers = registry.get(parts);
 
+    // run the registered handlers
+    var results = (handlers && handlers.map(function(handler) {
+      return handler.apply(scope || this, args);
+    })) || [];
+
     // run the parent handlers
     if (bus.parent) {
-      bus.parent.apply(scope || this, [ namespace.concat(parts) ].concat(args));
+      results = results.concat(
+        bus.parent.apply(scope || this, [namespace.concat(parts)].concat(args))
+      );
     }
 
-    return handlers && handlers.map(function(handler) {
-      return handler.apply(scope || this, args);
-    });
+    return results;
   }
 
   function getNameParts(name) {
@@ -47,8 +52,10 @@ var createBus = module.exports = function(namespace, parent, scope) {
 
   function once(name, handler) {
     on(name, function handleEvent() {
-      handler.apply(this, arguments);
+      var result = handler.apply(this, arguments);
       bus.off(name, handleEvent);
+
+      return result;
     });
   }
 
