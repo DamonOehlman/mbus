@@ -41,6 +41,11 @@ var reDelim = /[\.\:]/;
 
   <<< examples/feed.js
 
+  Additionally, feeds can be attached to a bus parent to capture namespaced
+  events:
+
+  <<< examples/feed-parent.js
+
   ## Reference
 
 **/
