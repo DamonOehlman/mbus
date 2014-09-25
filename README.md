@@ -147,6 +147,12 @@ received event name: foo.baz, with args:  []
 
 ## Reference
 
+### bus(namespace?, parent?, scope?)
+
+Create a new message bus with `namespace` inheriting from the `parent`
+mbus instance.  If events from this message bus should be triggered with
+a specific `this` scope, then specify it using the `scope` argument.
+
 ### bus#clear()
 
 Reset the handler registry, which essential deregisters all event listeners.
