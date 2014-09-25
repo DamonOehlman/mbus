@@ -13,6 +13,8 @@ var reDelim = /[\.\:]/;
 
   <<< examples/simple.js
 
+  OUTPUT:
+
   ```
   foo.bar triggered
   ```
@@ -22,6 +24,8 @@ var reDelim = /[\.\:]/;
   been invoked:
 
   <<< examples/parent.js
+
+  OUTPUT:
 
   ```
   foo triggered bar
@@ -37,6 +41,8 @@ var reDelim = /[\.\:]/;
   are invoked, however, as the bus can be created with an empty namespace:
 
   <<< examples/empty-namespace.js
+
+  OUTPUT:
 
   ```
   foo triggered bar
@@ -55,6 +61,8 @@ var reDelim = /[\.\:]/;
 
   <<< examples/feed.js
 
+  OUTPUT:
+
   ```
   received event name: foo, with args:  [ 'hello', 'there' ]
   received event name: bar, with args:  []
@@ -64,6 +72,8 @@ var reDelim = /[\.\:]/;
   events:
 
   <<< examples/feed-parent.js
+
+  OUTPUT:
 
   ```
   received event name: foo.bar, with args:  [ 'hello', 'there' ]

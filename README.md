@@ -23,6 +23,8 @@ bus('foo.bar');
 
 ```
 
+OUTPUT:
+
 ```
 foo.bar triggered
 ```
@@ -46,6 +48,8 @@ foo.on('bar', function() {
 foo('bar');
 
 ```
+
+OUTPUT:
 
 ```
 foo triggered bar
@@ -75,6 +79,8 @@ foo.on('bar', function() {
 foo('bar');
 
 ```
+
+OUTPUT:
 
 ```
 foo triggered bar
@@ -109,6 +115,8 @@ bus('baz');
 
 ```
 
+OUTPUT:
+
 ```
 received event name: foo, with args:  [ 'hello', 'there' ]
 received event name: bar, with args:  []
@@ -129,6 +137,8 @@ foo('bar', 'hello', 'there');
 foo('baz');
 
 ```
+
+OUTPUT:
 
 ```
 received event name: foo.bar, with args:  [ 'hello', 'there' ]
