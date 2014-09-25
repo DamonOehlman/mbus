@@ -23,3 +23,27 @@ test('clear deregisters all listeners', function(t) {
   bus.clear();
   bus('foo', 'bar');
 });
+
+test('clear targeted handlers', function(t) {
+  var failTimer = setTimeout(function() {
+    t.fail('bar not triggered');
+  }, 1000);
+
+  t.plan(2);
+  bus.once('foo', function() {
+    t.fail('Should not receive event');
+  });
+
+  bus.once('bar', function() {
+    t.pass('received bar');
+    clearTimeout(failTimer);
+  });
+
+  setTimeout(function() {
+    t.pass('event not triggered');
+  }, 500);
+
+  bus.clear('foo');
+  bus('foo');
+  bus('bar');
+});
