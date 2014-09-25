@@ -201,9 +201,9 @@ var createBus = module.exports = function(namespace, parent, scope) {
   namespace = (namespace && namespace.split(reDelim)) || [];
 
   bus.feed = feed;
-  bus.on = on;
+  bus.on = bus.addListener = on;
   bus.once = once;
-  bus.off = off;
+  bus.off = bus.removeListener = off;
   bus.parent = parent || (namespace && namespace.length > 0 && createBus());
 
   return bus;
