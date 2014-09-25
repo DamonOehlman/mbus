@@ -23,6 +23,10 @@ bus('foo.bar');
 
 ```
 
+```
+foo.bar triggered
+```
+
 Another simple example demonstrates, how a message bus can be provided a
 parent message bus to relay messages to once after any local handlers have
 been invoked:
@@ -41,6 +45,11 @@ foo.on('bar', function() {
 
 foo('bar');
 
+```
+
+```
+foo triggered bar
+foo.bar triggered
 ```
 
 ## Understanding Event Namespaces
@@ -65,6 +74,11 @@ foo.on('bar', function() {
 
 foo('bar');
 
+```
+
+```
+foo triggered bar
+bar triggered at parent level
 ```
 
 This can be very useful when you want to unify events into a single event
@@ -95,6 +109,11 @@ bus('baz');
 
 ```
 
+```
+received event name: foo, with args:  [ 'hello', 'there' ]
+received event name: bar, with args:  []
+```
+
 Additionally, feeds can be attached to a bus parent to capture namespaced
 events:
 
@@ -109,6 +128,11 @@ var stopFeed = bus.feed(function(evt) {
 foo('bar', 'hello', 'there');
 foo('baz');
 
+```
+
+```
+received event name: foo.bar, with args:  [ 'hello', 'there' ]
+received event name: foo.baz, with args:  []
 ```
 
 ## Reference

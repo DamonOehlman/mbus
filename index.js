@@ -13,11 +13,20 @@ var reDelim = /[\.\:]/;
 
   <<< examples/simple.js
 
+  ```
+  foo.bar triggered
+  ```
+
   Another simple example demonstrates, how a message bus can be provided a
   parent message bus to relay messages to once after any local handlers have
   been invoked:
 
   <<< examples/parent.js
+
+  ```
+  foo triggered bar
+  foo.bar triggered
+  ```
 
   ## Understanding Event Namespaces
 
@@ -28,6 +37,11 @@ var reDelim = /[\.\:]/;
   are invoked, however, as the bus can be created with an empty namespace:
 
   <<< examples/empty-namespace.js
+
+  ```
+  foo triggered bar
+  bar triggered at parent level
+  ```
 
   This can be very useful when you want to unify events into a single event
   bus but distribute their creation across a number of packages.
@@ -41,10 +55,20 @@ var reDelim = /[\.\:]/;
 
   <<< examples/feed.js
 
+  ```
+  received event name: foo, with args:  [ 'hello', 'there' ]
+  received event name: bar, with args:  []
+  ```
+
   Additionally, feeds can be attached to a bus parent to capture namespaced
   events:
 
   <<< examples/feed-parent.js
+
+  ```
+  received event name: foo.bar, with args:  [ 'hello', 'there' ]
+  received event name: foo.baz, with args:  []
+  ```
 
   ## Reference
 
