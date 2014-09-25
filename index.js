@@ -101,7 +101,7 @@ var createBus = module.exports = function(namespace, parent, scope) {
     });
 
     // run the registered handlers
-    results = handlers.map(function(handler) {
+    results = [].concat(handlers).map(function(handler) {
       return handler.apply(scope || this, args);
     });
 
