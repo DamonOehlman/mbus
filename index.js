@@ -59,8 +59,15 @@ var createBus = module.exports = function(namespace, parent, scope) {
 
     _Alias:_ `removeAllListeners`
   **/
-  function clear() {
-    registry = createTrie();
+  function clear(name) {
+    // if we have a name, reset handlers for that handler
+    if (name) {
+      registry.set(getNameParts(name), []);
+    }
+    // otherwise, reset the entire handler registry
+    else {
+      registry = createTrie();
+    }
   }
 
   /**
