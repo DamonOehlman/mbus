@@ -11,6 +11,7 @@
     "type": "git",
     "url": "https://github.com/DamonOehlman/mbus.git"
   },
+  "stability": "unstable",
   "keywords": [
     "eventemitter",
     "emitter",
