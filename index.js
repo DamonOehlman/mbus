@@ -116,6 +116,17 @@ var createBus = module.exports = function(namespace, parent, scope) {
   }
 
   /**
+    ### bus#clear()
+
+    Reset the handler registry, which essential deregisters all event listeners.
+
+    _Alias:_ `removeAllListeners`
+  **/
+  function clear() {
+    registry = createTrie();
+  }
+
+  /**
     ### bus#feed(handler)
 
     Attach a handler function that will see all events that are sent through
@@ -200,6 +211,7 @@ var createBus = module.exports = function(namespace, parent, scope) {
 
   namespace = (namespace && namespace.split(reDelim)) || [];
 
+  bus.clear = bus.removeAllListeners = clear;
   bus.feed = feed;
   bus.on = bus.addListener = on;
   bus.once = once;

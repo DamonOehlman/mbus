@@ -3,3 +3,4 @@ require('./parents');
 // require('./scope');
 require('./empty-namespace');
 require('./feed');
+require('./clear');
