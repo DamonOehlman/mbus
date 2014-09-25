@@ -32,6 +32,15 @@ var reDelim = /[\.\:]/;
   This can be very useful when you want to unify events into a single event
   bus but distribute their creation across a number of packages.
 
+  ## Event Feeds
+
+  In some situations, it is more desirable to get information on all the
+  events that are passing through a bus rather than attempting to intercept
+  individual events.  This behaviour can be done using mbus via the `feed`
+  function:
+
+  <<< examples/feed.js
+
   ## Reference
 
 **/
