@@ -82,7 +82,7 @@ var reDelim = /[\.\:]/;
 
   ## Reference
 
-  ### bus(namespace?, parent?, scope?)
+  ### `mbus(namespace?, parent?, scope?)`
 
   Create a new message bus with `namespace` inheriting from the `parent`
   mbus instance.  If events from this message bus should be triggered with
@@ -122,7 +122,7 @@ var createBus = module.exports = function(namespace, parent, scope) {
   }
 
   /**
-    ### bus#clear()
+    ### `mbus#clear()`
 
     Reset the handler registry, which essential deregisters all event listeners.
 
@@ -133,7 +133,7 @@ var createBus = module.exports = function(namespace, parent, scope) {
   }
 
   /**
-    ### bus#feed(handler)
+    ### `mbus#feed(handler)`
 
     Attach a handler function that will see all events that are sent through
     this bus in an "object stream" format that matches the following format:
@@ -160,7 +160,7 @@ var createBus = module.exports = function(namespace, parent, scope) {
   }
 
   /**
-    ### bus#off(name, handler)
+    ### `mbus#off(name, handler)`
 
     Deregister an event handler.
   **/
@@ -173,7 +173,7 @@ var createBus = module.exports = function(namespace, parent, scope) {
   }
 
   /**
-    ### bus#on(name, handler)
+    ### `mbus#on(name, handler)`
 
     Register an event handler for the event `name`.
 
@@ -194,7 +194,7 @@ var createBus = module.exports = function(namespace, parent, scope) {
 
 
   /**
-    ### bus#once(name, handler)
+    ### `mbus#once(name, handler)`
 
     Register an event handler for the event `name` that will only
     trigger once (i.e. the handler will be deregistered immediately after
