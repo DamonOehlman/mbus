@@ -115,6 +115,20 @@ var createBus = module.exports = function(namespace, parent, scope) {
     return results;
   }
 
+  /**
+    ### bus#feed(handler)
+
+    Attach a handler function that will see all events that are sent through
+    this bus in an "object stream" format that matches the following format:
+
+    ```
+    { name: 'event.name', args: [ 'event', 'args' ] }
+    ```
+
+    The feed function returns a function that can be called to stop the feed
+    sending data.
+
+  **/
   function feed(handler) {
     function stop() {
       feeds.splice(feeds.indexOf(handler), 1);
@@ -128,6 +142,11 @@ var createBus = module.exports = function(namespace, parent, scope) {
     return Array.isArray(name) ? name : name.split(reDelim);
   }
 
+  /**
+    ### bus#off(name, handler)
+
+    Deregister an event handler.
+  **/
   function off(name, handler) {
     var handlers = registry.get(getNameParts(name));
 

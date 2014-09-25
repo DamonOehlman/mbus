@@ -147,6 +147,22 @@ received event name: foo.baz, with args:  []
 
 ## Reference
 
+### bus#feed(handler)
+
+Attach a handler function that will see all events that are sent through
+this bus in an "object stream" format that matches the following format:
+
+```
+{ name: 'event.name', args: [ 'event', 'args' ] }
+```
+
+The feed function returns a function that can be called to stop the feed
+sending data.
+
+### bus#off(name, handler)
+
+Deregister an event handler.
+
 ### bus#on(name, handler)
 
 Register an event handler for the event `name`.
