@@ -47,3 +47,27 @@ test('clear targeted handlers', function(t) {
   bus('foo');
   bus('bar');
 });
+
+test('clear targeted, nested handlers', function(t) {
+  var failTimer = setTimeout(function() {
+    t.fail('foo.baz not triggered');
+  }, 1000);
+
+  t.plan(2);
+  bus.once('foo.bar', function() {
+    t.fail('Should not receive event');
+  });
+
+  bus.once('foo.baz', function() {
+    t.pass('received foo.baz');
+    clearTimeout(failTimer);
+  });
+
+  setTimeout(function() {
+    t.pass('event not triggered');
+  }, 500);
+
+  bus.clear('foo.bar');
+  bus('foo.bar');
+  bus('foo.baz');
+});
