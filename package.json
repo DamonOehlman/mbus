@@ -1,6 +1,6 @@
 {
   "name": "mbus",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "description": "If Node's EventEmitter and Eve were to have a child, it might look something like this",
   "main": "index.js",
   "scripts": {
