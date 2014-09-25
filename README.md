@@ -147,6 +147,12 @@ received event name: foo.baz, with args:  []
 
 ## Reference
 
+### bus#clear()
+
+Reset the handler registry, which essential deregisters all event listeners.
+
+_Alias:_ `removeAllListeners`
+
 ### bus#feed(handler)
 
 Attach a handler function that will see all events that are sent through
