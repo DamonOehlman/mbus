@@ -43,6 +43,45 @@ foo('bar');
 
 ```
 
+## Understanding Event Namespaces
+
+By default, events are emitted with a dot delimited format which respects
+their lineage.  A good example of this is the second example shown above.
+
+It is not mandatory for a child bus to add it's own namespace when events
+are invoked, however, as the bus can be created with an empty namespace:
+
+```js
+var bus = require('mbus')();
+var foo = require('mbus')('', bus);
+
+bus.on('bar', function() {
+  console.log('bar triggered at parent level');
+});
+
+foo.on('bar', function() {
+  console.log('foo triggered bar');
+});
+
+foo('bar');
+
+```
+
+This can be very useful when you want to unify events into a single event
+bus but distribute their creation across a number of packages.
+
+## Reference
+
+### bus#on(name, handler)
+
+Register an event handler for the event `name`.
+
+### bus#once(name, handler)
+
+Register an event handler for the event `name` that will only
+trigger once (i.e. the handler will be deregistered immediately after
+being triggered the first time).
+
 ## License(s)
 
 ### MIT
