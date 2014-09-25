@@ -38,14 +38,22 @@ var reDelim = /[\.\:]/;
 
 var createBus = module.exports = function(namespace, parent, scope) {
   var registry = createTrie();
+  var feeds = [];
 
   function bus(name) {
     var args = [].slice.call(arguments, 1);
     var parts = getNameParts(name);
+    var delimited = parts.join('.');
     var handlers = registry.get(parts) || [];
+    var results;
+
+    // send through the feeds
+    feeds.forEach(function(feed) {
+      feed({ name: delimited, args: args });
+    });
 
     // run the registered handlers
-    var results = handlers.map(function(handler) {
+    results = handlers.map(function(handler) {
       return handler.apply(scope || this, args);
     });
 
@@ -57,6 +65,15 @@ var createBus = module.exports = function(namespace, parent, scope) {
     }
 
     return results;
+  }
+
+  function feed(handler) {
+    function stop() {
+      feeds.splice(feeds.indexOf(handler), 1);
+    }
+
+    feeds.push(handler);
+    return stop;
   }
 
   function getNameParts(name) {
@@ -101,7 +118,7 @@ var createBus = module.exports = function(namespace, parent, scope) {
 
   **/
   function once(name, handler) {
-    on(name, function handleEvent() {
+    return on(name, function handleEvent() {
       var result = handler.apply(this, arguments);
       bus.off(name, handleEvent);
 
@@ -116,6 +133,7 @@ var createBus = module.exports = function(namespace, parent, scope) {
 
   namespace = (namespace && namespace.split(reDelim)) || [];
 
+  bus.feed = feed;
   bus.on = on;
   bus.once = once;
   bus.off = off;
