@@ -95,6 +95,22 @@ bus('baz');
 
 ```
 
+Additionally, feeds can be attached to a bus parent to capture namespaced
+events:
+
+```js
+var bus = require('mbus')();
+var foo = require('mbus')('foo', bus);
+var stopFeed = bus.feed(function(evt) {
+  console.log('received event name: ' + evt.name + ', with args: ', evt.args);
+});
+
+// trigger some events
+foo('bar', 'hello', 'there');
+foo('baz');
+
+```
+
 ## Reference
 
 ### bus#on(name, handler)
