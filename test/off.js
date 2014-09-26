@@ -27,16 +27,17 @@ test('off deregisters targeted handler', function(t) {
 });
 
 test('off deregistering unknown event does not affect event flow', function(t) {
+  var failTimer = setTimeout(function() {
+    t.fail('event not triggered');
+  }, 500);
+
   function handleEvent(data) {
+    clearTimeout(failTimer);
     t.pass('event triggered');
   }
 
   t.plan(1);
   bus.on('foo', handleEvent);
-
-  setTimeout(function() {
-    t.fail('event not triggered');
-  }, 500);
 
   bus.off('foo', function() {});
   bus('foo', 'bar');
