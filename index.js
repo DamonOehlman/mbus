@@ -104,9 +104,10 @@ var createBus = module.exports = function(namespace, parent, scope) {
   **/
   function off(name, handler) {
     var handlers = registry.get(getNameParts(name));
+    var idx = handlers ? handlers.indexOf(handler) : -1;
 
-    if (handlers) {
-      handlers.splice(handlers.indexOf(handler), 1);
+    if (idx >= 0) {
+      handlers.splice(idx, 1);
     }
   }
 
