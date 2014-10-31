@@ -1,5 +1,5 @@
-var createTrie = require('array-trie');
 var reDelim = /[\.\:]/;
+var DELIM = '::';
 
 /**
   # mbus
@@ -22,15 +22,18 @@ var reDelim = /[\.\:]/;
 **/
 
 var createBus = module.exports = function(namespace, parent, scope) {
-  var registry = createTrie();
+  var registry = {};
   var feeds = [];
 
   function bus(name) {
     var args = [].slice.call(arguments, 1);
     var parts = getNameParts(name);
-    var delimited = parts.join('.');
-    var handlers = registry.get(parts) || [];
+    var delimited = parts.join(DELIM);
+    var handlers = registry[delimited] || [];
+//     var handlers = registry.get(parts) || [];
     var results;
+
+    console.log(parts);
 
     // send through the feeds
     feeds.forEach(function(feed) {
@@ -62,11 +65,11 @@ var createBus = module.exports = function(namespace, parent, scope) {
   function clear(name) {
     // if we have a name, reset handlers for that handler
     if (name) {
-      registry.set(getNameParts(name), []);
+      registry[getNameParts(name).join(DELIM)] = [];
     }
     // otherwise, reset the entire handler registry
     else {
-      registry = createTrie();
+      registry = {};
     }
   }
 
@@ -103,7 +106,7 @@ var createBus = module.exports = function(namespace, parent, scope) {
     Deregister an event handler.
   **/
   function off(name, handler) {
-    var handlers = registry.get(getNameParts(name));
+    var handlers = registry[getNameParts(name).join(DELIM)];
     var idx = handlers ? handlers.indexOf(handler) : -1;
 
     if (idx >= 0) {
@@ -118,14 +121,14 @@ var createBus = module.exports = function(namespace, parent, scope) {
 
   **/
   function on(name, handler) {
-    var parts = getNameParts(name);
-    var handlers = registry.get(parts);
+    var parts = getNameParts(name).join(DELIM);
+    var handlers = registry[parts];
 
     if (handlers) {
       handlers.push(handler);
     }
     else {
-      registry.set(parts, [ handler ]);
+      registry[parts] = [ handler ];
     }
 
     return bus;
