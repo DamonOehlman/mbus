@@ -94,7 +94,7 @@ var createBus = module.exports = function(namespace, parent, scope) {
   }
 
   function getNameParts(name) {
-    return Array.isArray(name) ? name : name.split(reDelim);
+    return Array.isArray(name) ? name : (name ? name.split(reDelim) : []);
   }
 
   /**
