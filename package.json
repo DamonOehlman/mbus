@@ -1,6 +1,6 @@
 {
   "name": "mbus",
-  "version": "1.3.5",
+  "version": "2.0.0",
   "description": "If Node's EventEmitter and Eve were to have a child, it might look something like this",
   "main": "index.js",
   "scripts": {
@@ -24,8 +24,7 @@
     "url": "https://github.com/DamonOehlman/mbus/issues"
   },
   "homepage": "https://github.com/DamonOehlman/mbus",
-  "dependencies": {
-  },
+  "dependencies": {},
   "devDependencies": {
     "tape": "^3.0.0"
   }
