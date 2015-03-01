@@ -1,4 +1,3 @@
-var createTrie = require('array-trie');
 var reDelim = /[\.\:]/;
 
 /**

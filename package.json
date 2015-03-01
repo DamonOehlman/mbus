@@ -25,7 +25,6 @@
   },
   "homepage": "https://github.com/DamonOehlman/mbus",
   "dependencies": {
-    "array-trie": "^1.0.0"
   },
   "devDependencies": {
     "tape": "^3.0.0"
