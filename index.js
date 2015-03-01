@@ -104,7 +104,7 @@ var createBus = module.exports = function(namespace, parent, scope) {
   **/
   function off(name, handler) {
     var handlers = registry.get(getNameParts(name));
-    var idx = handlers ? handlers.indexOf(handler) : -1;
+    var idx = handlers ? handlers.indexOf(handler._actual || handler) : -1;
 
     if (idx >= 0) {
       handlers.splice(idx, 1);
@@ -141,12 +141,15 @@ var createBus = module.exports = function(namespace, parent, scope) {
 
   **/
   function once(name, handler) {
-    return on(name, function handleEvent() {
+    function handleEvent() {
       var result = handler.apply(this, arguments);
-      bus.off(name, handleEvent);
 
+      bus.off(name, handleEvent);
       return result;
-    });
+    }
+
+    handler._actual = handleEvent;
+    return on(name, handleEvent);
   }
 
   if (typeof namespace == 'function') {
