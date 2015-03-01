@@ -37,8 +37,24 @@ test('off deregistering unknown event does not affect event flow', function(t) {
   }
 
   t.plan(1);
-  bus.on('foo', handleEvent);
+  bus.once('foo', handleEvent);
 
   bus.off('foo', function() {});
+  bus('foo', 'bar');
+});
+
+test('off deregisters handler loaded with once', function(t) {
+  function handleEvent(data) {
+    t.fail('Should not receive event');
+  }
+
+  t.plan(1);
+  bus.once('foo', handleEvent);
+
+  setTimeout(function() {
+    t.pass('event not triggered');
+  }, 500);
+
+  bus.off('foo', handleEvent);
   bus('foo', 'bar');
 });
