@@ -95,7 +95,7 @@ var createBus = module.exports = function(namespace, parent, scope) {
   }
 
   function normalize(name) {
-    return name.split(reDelim).join('.');
+    return (Array.isArray(name) ? name : name.split(reDelim)).join('.');
   }
 
   /**
