@@ -21,14 +21,13 @@ var reDelim = /[\.\:]/;
 **/
 
 var createBus = module.exports = function(namespace, parent, scope) {
-  var registry = createTrie();
+  var registry = {};
   var feeds = [];
 
   function bus(name) {
     var args = [].slice.call(arguments, 1);
-    var parts = getNameParts(name);
-    var delimited = parts.join('.');
-    var handlers = registry.get(parts) || [];
+    var delimited = normalize(name);
+    var handlers = registry[delimited] || [];
     var results;
 
     // send through the feeds
@@ -44,7 +43,10 @@ var createBus = module.exports = function(namespace, parent, scope) {
     // run the parent handlers
     if (bus.parent) {
       results = results.concat(
-        bus.parent.apply(scope || this, [namespace.concat(parts)].concat(args))
+        bus.parent.apply(
+          scope || this,
+          [(namespace ? namespace + '.' : '') + delimited].concat(args)
+        )
       );
     }
 
@@ -61,11 +63,11 @@ var createBus = module.exports = function(namespace, parent, scope) {
   function clear(name) {
     // if we have a name, reset handlers for that handler
     if (name) {
-      registry.set(getNameParts(name), []);
+      delete registry[normalize(name)];
     }
     // otherwise, reset the entire handler registry
     else {
-      registry = createTrie();
+      registry = {};
     }
   }
 
@@ -92,8 +94,8 @@ var createBus = module.exports = function(namespace, parent, scope) {
     return stop;
   }
 
-  function getNameParts(name) {
-    return Array.isArray(name) ? name : (name ? name.split(reDelim) : []);
+  function normalize(name) {
+    return name.split(reDelim).join('.');
   }
 
   /**
@@ -102,7 +104,7 @@ var createBus = module.exports = function(namespace, parent, scope) {
     Deregister an event handler.
   **/
   function off(name, handler) {
-    var handlers = registry.get(getNameParts(name));
+    var handlers = registry[normalize(name)] || [];
     var idx = handlers ? handlers.indexOf(handler._actual || handler) : -1;
 
     if (idx >= 0) {
@@ -117,14 +119,16 @@ var createBus = module.exports = function(namespace, parent, scope) {
 
   **/
   function on(name, handler) {
-    var parts = getNameParts(name);
-    var handlers = registry.get(parts);
+    var handlers;
+
+    name = normalize(name);
+    handlers = registry[name];
 
     if (handlers) {
       handlers.push(handler);
     }
     else {
-      registry.set(parts, [ handler ]);
+      registry[name] = [ handler ];
     }
 
     return bus;
@@ -156,14 +160,14 @@ var createBus = module.exports = function(namespace, parent, scope) {
     namespace = '';
   }
 
-  namespace = (namespace && namespace.split(reDelim)) || [];
+  namespace = normalize(namespace || '');
 
   bus.clear = bus.removeAllListeners = clear;
   bus.feed = feed;
   bus.on = bus.addListener = on;
   bus.once = once;
   bus.off = bus.removeListener = off;
-  bus.parent = parent || (namespace && namespace.length > 0 && createBus());
+  bus.parent = parent || (namespace && createBus());
 
   return bus;
 };
